@@ -26,9 +26,6 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @Autowired
-    private ProductRepository productRepository;
-
     @PostMapping
     public ResponseEntity<ProductModel> saveProduct(@RequestBody @Valid ProductRecordDto productRecordDto) {
           return ResponseEntity.status(HttpStatus.CREATED).body(productService.saveProduct(productRecordDto));
@@ -57,17 +54,13 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateProduct(@PathVariable(value="id") UUID id,
+    public ResponseEntity<Object> updateProduct(@PathVariable(value = "id") UUID id,
                                                 @RequestBody @Valid ProductRecordDto productRecordDto) {
-        Optional<ProductModel> product0 = productService.updateProduct(id, productRecordDto);
-        if(product0.isEmpty()) {
+        Optional<ProductModel> updatedProduct = productService.updateProduct(id, productRecordDto);
+        if (updatedProduct.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found.");
         }
-        var productModel = product0.get();
-        BeanUtils.copyProperties(productRecordDto, productModel);
-        productService.saveProduct(productRecordDto);
-        return ResponseEntity.status(HttpStatus.OK).body(productModel);
-
+        return ResponseEntity.status(HttpStatus.OK).body(updatedProduct.get());
     }
 
     @DeleteMapping("/{id}")

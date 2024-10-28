@@ -3,10 +3,8 @@ package com.example.spring_boot.controllers;
 
 import com.example.spring_boot.dtos.ProductRecordDto;
 import com.example.spring_boot.models.ProductModel;
-import com.example.spring_boot.repositories.ProductRepository;
 import com.example.spring_boot.services.ProductService;
 import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
